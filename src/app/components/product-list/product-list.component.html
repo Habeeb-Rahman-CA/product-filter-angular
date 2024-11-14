@@ -1,0 +1,9 @@
+<div>
+    <input [(ngModel)]="searchItem" type="text" name="searchItem" placeholder="Search Item...">
+</div>
+<button (click)="toggleSort()">Sort</button>
+<div>
+    @for (product of filterProduct() | sorting:ascending ; track $index) {
+        <p>{{product.name}} - {{product.category}} - {{product.price | currency: 'INR'}}</p>
+    }
+</div>
