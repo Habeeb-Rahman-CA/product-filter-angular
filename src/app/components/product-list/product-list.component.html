@@ -1,9 +1,39 @@
-<div>
-    <input [(ngModel)]="searchItem" type="text" name="searchItem" placeholder="Search Item...">
-</div>
-<button (click)="toggleSort()">Sort</button>
-<div>
-    @for (product of filterProduct() | sorting:ascending ; track $index) {
-        <p>{{product.name}} - {{product.category}} - {{product.price | currency: 'INR'}}</p>
-    }
+<div class="container">
+    <h3 class="text-center fw-bold text-uppercase mt-3 mb-2">Filtering Products</h3>
+    
+    <div class="d-flex justify-content-center align-items-center my-4 gap-4">
+
+        <select [(ngModel)]="selectedCategory" class="form-select-sm fw-semibold">
+            <option value="">All Categories</option>
+            <option *ngFor="let category of categories" [value]="category">{{category}}</option>
+        </select>
+        
+        <input [(ngModel)]="searchItem" type="text" name="searchItem" placeholder="Search Item..." class="rounded border-0 p-1 text-black w-25">
+
+        <div class="d-flex gap-1 ">
+            <input type="number" [(ngModel)]="minPrice" name="minPrice" placeholder="Minimum Price" class="rounded p-1 border-0">
+            <input type="number" [(ngModel)]="maxPrice" name="maxPrice" placeholder="Maximum Price" class="rounded p-1 border-0">
+        </div>
+
+        <button class="btn rounded border-0 px-3 fw-semibold" (click)="toggleSort()">{{sortbtn()}}</button>
+
+    </div>
+    <table class="table table-striped table-sm table-hover">
+        <thead>
+            <tr class="table-warning">
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (product of getAllFilteredProduct() | sorting:ascending ; track $index) {
+                <tr class="table-warning">
+                    <td>{{product.name}}</td>
+                    <td>{{product.category}}</td>
+                    <td>{{product.price | currency: 'INR'}}</td>
+                </tr>
+                }
+        </tbody>
+    </table>
 </div>
